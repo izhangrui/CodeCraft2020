@@ -19,7 +19,7 @@ def writeFile(fileName, res, t1, t2):
     for r in res:
         for i in range(len(r)-1):
             f.write(t1[r[i]])
-        f.write(t2[r[i]])
+        f.write(t2[r[len(r)-1]])
 
 # ------------------点编号转换为连续id---------------------
 
@@ -31,6 +31,7 @@ def convert(data):
         l.append(line[0])
         l.append(line[1])
     st = list(set(l))
+    st.sort()
     for i in range(len(st)):
         d[st[i]] = i
     for i in range(len(data)):
@@ -47,6 +48,8 @@ def createGraph(data, n):
     g = [[] for i in range(n)]
     for line in data:
         g[line[0]].append(line[1])
+    for i in range(n):
+        g[i].sort()
     return g
 
 # -------------------深度遍历找环--------------------------

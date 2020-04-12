@@ -19,7 +19,7 @@ def writeFile(fileName, res, t1, t2):
     for r in res:
         for i in range(len(r)-1):
             f.write(t1[r[i]])
-        f.write(t2[r[i]])
+        f.write(t2[r[len(r)-1]])
 
 # ------------------点编号转换为连续id---------------------
 
@@ -31,6 +31,7 @@ def convert(data):
         l.append(line[0])
         l.append(line[1])
     st = list(set(l))
+    st.sort()
     for i in range(len(st)):
         d[st[i]] = i
     for i in range(len(data)):
@@ -49,6 +50,9 @@ def createGraph(data, n):
     for line in data:
         g[line[0]].append(line[1])
         g1[line[1]].append(line[0])
+    for i in range(n):
+        g[i].sort()
+        g1[i].sort()
     return g, g1
 
 # -------------------深度遍历找环--------------------------
@@ -59,6 +63,7 @@ def dfs(g, k, p_o, visit, visit1, res, path):
         if g[k][i] == p_o:  # 如果下一个点是查询点，则找到了环
             if len(path) > 2:
                 res.append(path.copy())
+                # print(path)
             continue
         if visit[g[k][i]] == 1 or g[k][i] < p_o or visit1[g[k][i]] != p_o:  # 如果下一个点是已经访问过的点，或者已经查询过的点
             continue
