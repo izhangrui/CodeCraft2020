@@ -75,7 +75,6 @@ def dfs(g, k, p_o, visit, visit1, res, path):
                 # print(path)
             path.pop()
             # continue
-        # 如果下一个点是已经访问过的点，或者已经查询过的点
         if visit[v] == 1 or (visit1[v] != p_o and visit1[v] != -2):
             continue
         if len(path) == 6 or v == p_o:
@@ -110,7 +109,7 @@ if __name__ == "__main__":
     n = len(t1)
     g, g1 = createGraph(data, n)
     visit = [0 for i in range(n)]
-    visit1 = [-1 for i in range(n)]
+    visit1 = [-1 for i in range(n)]  # 为-1则是被剪掉的点
     path = []
     res = [[] for i in range(5)]
     for i in range(n):
@@ -118,7 +117,7 @@ if __name__ == "__main__":
         dfs1(g, i, i, visit, visit1, 1)
         dfs1(g1, i, i, visit, visit1, 1)
         for j in range(len(g1[i])):
-            visit1[g1[i][j]] = -2
+            visit1[g1[i][j]] = -2  # 将倒数第二个点标记为-2
         dfs(g, i, i, visit, visit1, res, path)
         path.pop()
         for j in range(len(g1[i])):
